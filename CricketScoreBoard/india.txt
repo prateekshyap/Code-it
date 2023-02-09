@@ -1,0 +1,27 @@
+Rohit Sharma(C),10,40
+KL Rahul,4,30
+Cheteshwar,1,35
+Virat Kohli,6,38
+SuryaKumar,90,25
+Srikar(W),3,27
+Ravindra,28,40
+Ravichandran,32,38
+Axar Patel,45,28
+Mohammad Shami,16,38
+Mohammad Siraj,11,25
+10,4,6,90,3,28,1,45,32,11,16
+6
+1
+1
+1
+1
+1
+2
+7
+W
+4
+4
+Wd
+W
+1
+6

@@ -1,0 +1,24 @@
+Williamson(C),10,32
+Mark Chapman,4,28
+Martin Guptill,1,26
+Devon Conway(W),6,31
+Glenn Phillips,90,25
+Finn Allen,3,23
+Michael B.,28,31
+Daryl Mitchell,32,31
+James Neesham,45,32
+Mitchell Sant,16,30
+Trent Boult,11,33
+10,4,6,90,3,28,1,45,32,11,16
+6
+4
+6
+W
+W
+1
+1
+4
+6
+1
+W
+W
