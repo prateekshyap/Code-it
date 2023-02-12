@@ -1,15 +1,17 @@
 package team.user;
 
+import time.TimeConverter;
+
 public class User
 {
 	String userId;
 	int teamId;
-	int[] start, int[] end;
-	public User(String id, int[] start, int[] end)
+	int[] start, end;
+	public User(String[] data)
 	{
-		this.userId = id;
-		this.start = start;
-		this.end = end;
+		this.userId = data[0];
+		this.start = TimeConverter.convertStringTo24Format(data[1]);
+		this.end = TimeConverter.convertStringTo24Format(data[2]);
 		this.teamId = -1;
 	}
 	public void setTeam(int teamId)

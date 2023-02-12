@@ -7,9 +7,11 @@ import team.user.User;
 
 public class Team
 {
+	String teamId;
 	List<User> users;
-	public Team(List<User> userIds)
+	public Team(String teamId, List<User> users)
 	{
-		this.users = userIds;
+		this.teamId = teamId;
+		this.users = users;
 	}
 }
