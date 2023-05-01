@@ -6,6 +6,7 @@ import team.Team;
 import team.user.User;
 import time.TimeConverter;
 import time.Day;
+import exception.UserNotAvailable;
 
 public class Event
 {
@@ -13,7 +14,7 @@ public class Event
 	List<Team> teams;
 	int representatives;
 	int day;
-	int[] startTime, endTime;
+	int startTime, endTime;
 	public Event(List<User> users, List<Team> teams, int representatives, String day, String startTime, String endTime)
 	{
 		this.users = users;
@@ -23,9 +24,15 @@ public class Event
 		this.startTime = TimeConverter.convertStringTo24Format(startTime);
 		this.endTime = TimeConverter.convertStringTo24Format(endTime);
 
-		// for (User user : users)
-		// {
-		// 	if (user.isAvailable())
-		// }
+		try{
+		for (User user : users)
+		{
+			if (!user.isAvailable(this.day,this.startTime,this.endTime))
+				throw new UserNotAvailable("User already occupied");
+		}
+		}catch(Exception e)
+		{
+			
+		}
 	}
 }

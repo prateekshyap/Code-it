@@ -2,7 +2,7 @@ package exception;
 
 public class UserNotAvailable extends Exception
 {
-	UserNotAvailable(String message)
+	public UserNotAvailable(String message)
 	{
 		super(message);
 	}

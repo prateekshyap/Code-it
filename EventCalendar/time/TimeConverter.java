@@ -2,7 +2,7 @@ package time;
 
 public class TimeConverter
 {
-	public static int[] convertStringTo24Format(String time)
+	public static int convertStringTo24Format(String time)
 	{
 		int len = time.length();
 		int[] formattedTime = new int[2];
@@ -27,12 +27,19 @@ public class TimeConverter
 			hour += 12;
 		formattedTime[0] = hour;
 		formattedTime[1] = minute;
-		return formattedTime;
+		// return formattedTime;
+		int finalTime = formattedTime[0]*60;
+		finalTime += formattedTime[1];
+		return finalTime;
 	}
-	public static String convert24ToStringFormat(int[] time)
+	public static String convert24ToStringFormat(int timeValue)
 	{
 		StringBuilder build = new StringBuilder();
 		boolean isPost = false;
+
+		int[] time = new int[2];
+		time[0] = timeValue/60;
+		time[1] = timeValue%60;
 
 		if (time[0] == 0)
 			build.append("12");
