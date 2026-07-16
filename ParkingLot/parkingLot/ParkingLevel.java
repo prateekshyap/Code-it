@@ -130,6 +130,22 @@ public class ParkingLevel {
 //        return -1;
     }
 
+    public Vehicle removeVehicle(Ticket ticket) {
+        int parkingSlot = ticket.getParkingSlot();
+        ParkingSlotType parkingSlotType = ticket.getParkingSlotType();
+        if (parkingSlotType == ParkingSlotType.SMALL)
+            return smallSlotList[parkingSlot].removeVehicle(ticket);
+        else if (parkingSlotType == ParkingSlotType.COMPACT)
+            return compactSlotList[parkingSlot].removeVehicle(ticket);
+        else /*if (parkingSlotType == ParkingSlotType.LARGE)*/ {
+            if (ticket.getVehicleType() == VehicleType.BUS) {
+                largeSlotList[parkingSlot].removeVehicle(ticket);
+                largeSlotList[parkingSlot+1].removeVehicle(ticket);
+                return largeSlotList[parkingSlot+2].removeVehicle(ticket);
+            } else return largeSlotList[parkingSlot].removeVehicle(ticket);
+        }
+    }
+
     public int getLevelTag() {
         return this.levelTag;
     }

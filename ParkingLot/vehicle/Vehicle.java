@@ -21,12 +21,14 @@ public class Vehicle {
         else if (type == VehicleType.BUS)
             this.vehicleSize = VehicleSize.LARGE;
         this.vehicleCode = vehicleCode;
+        this.ticket = null;
     }
 
     Vehicle(VehicleType type, VehicleSize size, String vehicleCode) {
         this.vehicleType = type;
         this.vehicleSize = size;
         this.vehicleCode = vehicleCode;
+        this.ticket = null;
     }
 
     public VehicleType getVehicleType() {
@@ -42,6 +44,8 @@ public class Vehicle {
     }
 
     public void giveTicket(Ticket ticket) { this.ticket = ticket; }
+
+    public Ticket getTicket() { return this.ticket; }
 
     @Override
     public String toString() {

@@ -13,6 +13,8 @@ import parkingLot.ParkingLot;
 
 import ticket.Ticket;
 
+import paymentService.PaymentService;
+
 public class Parking {
     public static void main(String[] args) throws IOException {
         // build the parking lot
@@ -137,12 +139,27 @@ public class Parking {
         vehicle[11] = new Vehicle(VehicleType.BUS, "KA 19E 2902");
         parkingTicket = new Ticket(timeCounter++);
         isVehicleParked = parkingLot.parkVehicle(vehicle[11], parkingTicket);
-        vehicle[11].giveTicket(parkingTicket);
+        if (isVehicleParked) {
+            vehicle[11].giveTicket(parkingTicket);
+        }
         System.out.println(vehicle[11].getVehicleCode()+ (isVehicleParked ? " parked." : " not parked."));
         if (isVehicleParked) {
             System.out.println(parkingTicket);
             System.out.println(parkingLot);
         }
 
+        //start unparking
+        parkingTicket = vehicle[4].getTicket();
+        if (parkingTicket != null) {
+            parkingTicket.setExitTime(timeCounter++);
+            Vehicle removedVehicle = parkingLot.removeVehicle(parkingTicket);
+            System.out.println("Target vehicle:");
+            System.out.println(vehicle[4]);
+            System.out.println("Removed vehicle:");
+            System.out.println(removedVehicle);
+            int fees = PaymentService.processPayment(parkingTicket);
+            System.out.println(fees);
+            System.out.println(parkingLot);
+        }
     }
 }

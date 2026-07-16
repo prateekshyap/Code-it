@@ -54,6 +54,11 @@ public class ParkingLot {
         return isParked;
     }
 
+    public Vehicle removeVehicle(Ticket ticket) {
+        int parkingLevel = ticket.getParkingLevel();
+        return parkingLot[parkingLevel].removeVehicle(ticket);
+    }
+
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();
