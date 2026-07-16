@@ -1,5 +1,7 @@
 package vehicle;
 
+import ticket.Ticket;
+
 enum VehicleSize {
     SMALL, MEDIUM, LARGE
 }
@@ -8,6 +10,7 @@ public class Vehicle {
     VehicleType vehicleType;
     VehicleSize vehicleSize;
     String vehicleCode;
+    Ticket ticket;
 
     public Vehicle(VehicleType type, String vehicleCode) {
         this.vehicleType = type;
@@ -37,6 +40,8 @@ public class Vehicle {
     public String getVehicleCode() {
         return this.vehicleCode;
     }
+
+    public void giveTicket(Ticket ticket) { this.ticket = ticket; }
 
     @Override
     public String toString() {

@@ -3,6 +3,8 @@ package parkingLot;
 import vehicle.VehicleType;
 import vehicle.Vehicle;
 
+import ticket.Ticket;
+
 public class ParkingLevel {
     final int defaultSlotCount = 10;
 
@@ -22,13 +24,13 @@ public class ParkingLevel {
         this.compactSlotList = new ParkingSlot[compactSlotCount];
         this.largeSlotList = new ParkingSlot[largeSlotCount];
         for (int s = 0; s < smallSlotCount; ++s) {
-            this.smallSlotList[s] = new ParkingSlot(ParkingSlotType.SMALL);
+            this.smallSlotList[s] = new ParkingSlot(s, ParkingSlotType.SMALL);
         }
         for (int c = 0; c < compactSlotCount; ++c) {
-            this.compactSlotList[c] = new ParkingSlot(ParkingSlotType.COMPACT);
+            this.compactSlotList[c] = new ParkingSlot(c, ParkingSlotType.COMPACT);
         }
         for (int l = 0; l < largeSlotCount; ++l) {
-            this.largeSlotList[l] = new ParkingSlot(ParkingSlotType.LARGE);
+            this.largeSlotList[l] = new ParkingSlot(l, ParkingSlotType.LARGE);
         }
     }
 
@@ -45,13 +47,13 @@ public class ParkingLevel {
         this.compactSlotList = new ParkingSlot[compactSlotCount];
         this.largeSlotList = new ParkingSlot[largeSlotCount];
         for (int s = 0; s < smallSlotCount; ++s) {
-            this.smallSlotList[s] = new ParkingSlot(ParkingSlotType.SMALL);
+            this.smallSlotList[s] = new ParkingSlot(s, ParkingSlotType.SMALL);
         }
         for (int c = 0; c < compactSlotCount; ++c) {
-            this.compactSlotList[c] = new ParkingSlot(ParkingSlotType.COMPACT);
+            this.compactSlotList[c] = new ParkingSlot(c, ParkingSlotType.COMPACT);
         }
         for (int l = 0; l < largeSlotCount; ++l) {
-            this.largeSlotList[l] = new ParkingSlot(ParkingSlotType.LARGE);
+            this.largeSlotList[l] = new ParkingSlot(l, ParkingSlotType.LARGE);
         }
     }
 
@@ -72,22 +74,25 @@ public class ParkingLevel {
         return false;
     }
 
-    public int parkVehicle(Vehicle vehicle) {
+    public int parkVehicle(Vehicle vehicle, Ticket ticket) {
         VehicleType vehicleType = vehicle.getVehicleType();
         if (vehicleType == VehicleType.BIKE) {
             if (nextAvailableSmallSlot != -1) {
                 // park in this slot
-                smallSlotList[nextAvailableSmallSlot].parkVehicle(vehicle);
+                smallSlotList[nextAvailableSmallSlot].parkVehicle(vehicle, ticket);
+                ticket.addParkingSlot(smallSlotList[nextAvailableSmallSlot]);
                 nextAvailableSmallSlot =
                         nextAvailableSmallSlot+1 == smallSlotCount ? -1 : nextAvailableSmallSlot+1;
                 --availableSmallSlotCount;
             } else if (nextAvailableCompactSlot != -1) {
-                compactSlotList[nextAvailableCompactSlot].parkVehicle(vehicle);
+                compactSlotList[nextAvailableCompactSlot].parkVehicle(vehicle, ticket);
+                ticket.addParkingSlot(compactSlotList[nextAvailableCompactSlot]);
                 nextAvailableCompactSlot =
                         nextAvailableCompactSlot+1 == compactSlotCount ? -1 : nextAvailableCompactSlot+1;
                 --availableCompactSlotCount;
             } else /*if (nextAvailableLargeSlot != -1)*/ {
-                largeSlotList[nextAvailableLargeSlot].parkVehicle(vehicle);
+                largeSlotList[nextAvailableLargeSlot].parkVehicle(vehicle, ticket);
+                ticket.addParkingSlot(largeSlotList[nextAvailableLargeSlot]);
                 nextAvailableLargeSlot =
                         nextAvailableLargeSlot + 1 == largeSlotCount ? -1 : nextAvailableLargeSlot + 1;
                 --availableLargeSlotCount;
@@ -95,20 +100,25 @@ public class ParkingLevel {
         }
         else if (vehicleType == VehicleType.CAR) {
             if (nextAvailableCompactSlot != -1) {
-                compactSlotList[nextAvailableCompactSlot].parkVehicle(vehicle);
+                compactSlotList[nextAvailableCompactSlot].parkVehicle(vehicle, ticket);
+                ticket.addParkingSlot(compactSlotList[nextAvailableCompactSlot]);
                 nextAvailableCompactSlot =
                         nextAvailableCompactSlot+1 == compactSlotCount ? -1 : nextAvailableCompactSlot+1;
                 --availableCompactSlotCount;
             } else /*if (nextAvailableLargeSlot != -1)*/ {
-                largeSlotList[nextAvailableLargeSlot].parkVehicle(vehicle);
+                largeSlotList[nextAvailableLargeSlot].parkVehicle(vehicle, ticket);
+                ticket.addParkingSlot(largeSlotList[nextAvailableLargeSlot]);
                 nextAvailableLargeSlot =
                         nextAvailableLargeSlot + 1 == largeSlotCount ? -1 : nextAvailableLargeSlot + 1;
                 --availableLargeSlotCount;
             }
         } else /*if (vehicleType == VehicleType.BUS)*/ {
-            largeSlotList[nextAvailableLargeSlot].parkVehicle(vehicle);
-            largeSlotList[nextAvailableLargeSlot+1].parkVehicle(vehicle);
-            largeSlotList[nextAvailableLargeSlot+2].parkVehicle(vehicle);
+            largeSlotList[nextAvailableLargeSlot].parkVehicle(vehicle, ticket);
+            largeSlotList[nextAvailableLargeSlot+1].parkVehicle(vehicle, ticket);
+            largeSlotList[nextAvailableLargeSlot+2].parkVehicle(vehicle, ticket);
+            ticket.addParkingSlot(largeSlotList[nextAvailableLargeSlot]);
+//            ticket.addParkingSlot(largeSlotList[nextAvailableLargeSlot+1]);
+//            ticket.addParkingSlot(largeSlotList[nextAvailableLargeSlot+2]);
             nextAvailableLargeSlot =
                     nextAvailableLargeSlot+3 == largeSlotCount ? -1 : nextAvailableLargeSlot+3;
             availableLargeSlotCount -= 3;
@@ -118,6 +128,10 @@ public class ParkingLevel {
         else
             return levelTag;
 //        return -1;
+    }
+
+    public int getLevelTag() {
+        return this.levelTag;
     }
 
     @Override

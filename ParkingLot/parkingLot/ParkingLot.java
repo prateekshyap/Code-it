@@ -3,6 +3,8 @@ package parkingLot;
 import vehicle.Vehicle;
 import vehicle.VehicleType;
 
+import ticket.Ticket;
+
 public class ParkingLot {
     final int defaultLevelCount = 3;
 
@@ -32,16 +34,18 @@ public class ParkingLot {
         return this.levels;
     }
 
-    public boolean parkVehicle(Vehicle vehicle) {
+    public boolean parkVehicle(Vehicle vehicle, Ticket ticket) {
         boolean isParkingPossible = parkingLot[nextAvailableLevel].checkParkingPossibility(vehicle);
         boolean isParked = false;
         if (isParkingPossible) {
-            this.nextAvailableLevel = parkingLot[nextAvailableLevel].parkVehicle(vehicle);
+            this.nextAvailableLevel = parkingLot[nextAvailableLevel].parkVehicle(vehicle, ticket);
+            ticket.addParkingLevel(parkingLot[nextAvailableLevel]);
             isParked = true;
         } else {
             for (int l = nextAvailableLevel+1; l < levels; ++l) {
                 if (parkingLot[l].checkParkingPossibility(vehicle)) {
-                    parkingLot[l].parkVehicle(vehicle);
+                    parkingLot[l].parkVehicle(vehicle, ticket);
+                    ticket.addParkingLevel(parkingLot[l]);
                     isParked = true;
                     break;
                 }
